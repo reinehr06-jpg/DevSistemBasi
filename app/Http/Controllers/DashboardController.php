@@ -76,7 +76,7 @@ class DashboardController extends Controller
         ));
     }
 
-    public function apiStats()
+    public function api()
     {
         $stats = [
             'total_tasks' => DevTask::count(),
@@ -90,5 +90,22 @@ class DashboardController extends Controller
         ];
 
         return response()->json($stats);
+    }
+
+    public function apiServers()
+    {
+        $servers = Server::with('system')->get()->map(function ($server) {
+            return [
+                'id' => $server->id,
+                'name' => $server->name,
+                'ip' => $server->ip,
+                'status' => $server->status,
+                'cpu_usage' => $server->cpu_usage,
+                'ram_usage' => $server->ram_usage,
+                'disk_usage' => $server->disk_usage,
+            ];
+        });
+
+        return response()->json($servers);
     }
 }

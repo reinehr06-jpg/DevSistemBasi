@@ -7,8 +7,14 @@ use App\Http\Controllers\DevTaskController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServerController;
+use App\Http\Controllers\SystemController;
 use App\Http\Controllers\WebhookController;
 use App\Http\Controllers\WorkLogController;
+use App\Http\Controllers\WorkflowController;
+use App\Http\Controllers\AlertController;
+use App\Http\Controllers\SystemProfileController;
+use App\Http\Controllers\DependencyController;
+use App\Http\Controllers\AIOrchestratorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +23,15 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/api/dashboard', [DashboardController::class, 'api'])->name('dashboard.api');
+    Route::get('/api/servers', [DashboardController::class, 'apiServers'])->name('servers.api');
+    
+    // Systems
+    Route::get('/systems', [SystemController::class, 'index'])->name('systems.index');
+    Route::post('/systems', [SystemController::class, 'store'])->name('systems.store');
+    Route::put('/systems/{system}', [SystemController::class, 'update'])->name('systems.update');
+    Route::delete('/systems/{system}', [SystemController::class, 'destroy'])->name('systems.destroy');
+    Route::post('/systems/{system}/detect', [SystemProfileController::class, 'detectFromSystem'])->name('systems.detect');
     
     Route::get('/dev-tasks', [DevTaskController::class, 'index'])->name('dev-tasks.index');
     Route::get('/dev-tasks/create', [DevTaskController::class, 'create'])->name('dev-tasks.create');
@@ -60,6 +75,50 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Workflows
+    Route::get('/workflows', [WorkflowController::class, 'index'])->name('workflows.index');
+    Route::post('/workflows', [WorkflowController::class, 'store'])->name('workflows.store');
+    Route::put('/workflows/{workflow}', [WorkflowController::class, 'update'])->name('workflows.update');
+    Route::delete('/workflows/{workflow}', [WorkflowController::class, 'destroy'])->name('workflows.destroy');
+    Route::post('/workflows/{workflow}/toggle', [WorkflowController::class, 'toggle'])->name('workflows.toggle');
+
+    // Alertas
+    Route::get('/alerts', [AlertController::class, 'index'])->name('alerts.index');
+    Route::get('/alerts/rules', [AlertController::class, 'rules'])->name('alerts.rules');
+    Route::post('/alerts/rules', [AlertController::class, 'storeRule'])->name('alerts.rules.store');
+    Route::put('/alerts/rules/{rule}', [AlertController::class, 'updateRule'])->name('alerts.rules.update');
+    Route::delete('/alerts/rules/{rule}', [AlertController::class, 'destroyRule'])->name('alerts.rules.destroy');
+    Route::post('/alerts/{alert}/acknowledge', [AlertController::class, 'acknowledge'])->name('alerts.acknowledge');
+
+    // System Profiles
+    Route::get('/system-profiles', [SystemProfileController::class, 'index'])->name('system-profiles.index');
+    Route::post('/system-profiles', [SystemProfileController::class, 'store'])->name('system-profiles.store');
+    Route::put('/system-profiles/{profile}', [SystemProfileController::class, 'update'])->name('system-profiles.update');
+    Route::delete('/system-profiles/{profile}', [SystemProfileController::class, 'destroy'])->name('system-profiles.destroy');
+    Route::post('/system-profiles/detect', [SystemProfileController::class, 'detect'])->name('system-profiles.detect');
+    Route::post('/systems/{system}/detect', [SystemProfileController::class, 'detectFromSystem'])->name('systems.detect');
+
+    // Dependencies
+    Route::get('/dependencies', [DependencyController::class, 'index'])->name('dependencies.index');
+    Route::post('/dependencies', [DependencyController::class, 'store'])->name('dependencies.store');
+    Route::put('/dependencies/{dependency}', [DependencyController::class, 'update'])->name('dependencies.update');
+    Route::delete('/dependencies/{dependency}', [DependencyController::class, 'destroy'])->name('dependencies.destroy');
+
+    // AI Orchestrator
+    Route::get('/ai-orchestrator', [AIOrchestratorController::class, 'index'])->name('ai-orchestrator.index');
+    Route::get('/ai-orchestrator/agents', [AIOrchestratorController::class, 'agents'])->name('ai-orchestrator.agents');
+    Route::post('/ai-orchestrator/agents', [AIOrchestratorController::class, 'storeAgent'])->name('ai-orchestrator.agents.store');
+    Route::put('/ai-orchestrator/agents/{agent}', [AIOrchestratorController::class, 'updateAgent'])->name('ai-orchestrator.agents.update');
+    Route::delete('/ai-orchestrator/agents/{agent}', [AIOrchestratorController::class, 'destroyAgent'])->name('ai-orchestrator.agents.destroy');
+    Route::get('/ai-orchestrator/flows', [AIOrchestratorController::class, 'flows'])->name('ai-orchestrator.flows');
+    Route::post('/ai-orchestrator/flows', [AIOrchestratorController::class, 'storeFlow'])->name('ai-orchestrator.flows.store');
+    Route::put('/ai-orchestrator/flows/{flow}', [AIOrchestratorController::class, 'updateFlow'])->name('ai-orchestrator.flows.update');
+    Route::delete('/ai-orchestrator/flows/{flow}', [AIOrchestratorController::class, 'destroyFlow'])->name('ai-orchestrator.flows.destroy');
+    Route::post('/ai-orchestrator/flows/{flow}/run', [AIOrchestratorController::class, 'runFlow'])->name('ai-orchestrator.flows.run');
+    Route::get('/ai-orchestrator/executions', [AIOrchestratorController::class, 'executions'])->name('ai-orchestrator.executions');
+    Route::get('/ai-orchestrator/executions/{execution}', [AIOrchestratorController::class, 'executionDetail'])->name('ai-orchestrator.executions.detail');
+    Route::get('/ai-orchestrator/config', [AIOrchestratorController::class, 'config'])->name('ai-orchestrator.config');
 });
 
 Route::post('/webhook/bitbucket', [WebhookController::class, 'handleBitbucket'])->name('webhook.bitbucket');

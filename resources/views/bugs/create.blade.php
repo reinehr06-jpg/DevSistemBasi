@@ -1,4 +1,4 @@
-@extends('layouts.app-new')
+@extends('layouts.app-dark')
 
 @section('title', 'Reportar Bug')
 

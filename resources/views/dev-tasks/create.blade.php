@@ -1,4 +1,4 @@
-@extends('layouts.app-new')
+@extends('layouts.app-dark')
 
 @section('title', 'Nova Tarefa')
 
@@ -12,7 +12,7 @@
             
             <div>
                 <label class="block text-sm text-gray-400 mb-2">Sistema</label>
-                <select name="system_id" class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-white">
+                <select name="system_id" style="width: 100%; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: white;">
                     @foreach($systems as $system)
                     <option value="{{ $system->id }}">{{ $system->name }}</option>
                     @endforeach

@@ -22,6 +22,21 @@ class Integration extends Model
         'last_used_at' => 'datetime',
     ];
 
+    public function actions()
+    {
+        return $this->hasMany(IntegrationAction::class);
+    }
+
+    public function enabledActions(): array
+    {
+        return $this->actions()->where('enabled', true)->pluck('action')->toArray();
+    }
+
+    public function canPerform(string $action): bool
+    {
+        return in_array($action, $this->enabledActions());
+    }
+
     public function system(): BelongsTo
     {
         return $this->belongsTo(System::class);
