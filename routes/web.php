@@ -19,6 +19,10 @@ use App\Http\Controllers\AIOrchestratorController;
 use App\Http\Controllers\AIWatcherController;
 use App\Http\Controllers\AIActionsController;
 use App\Http\Controllers\AIPredictionsController;
+use App\Http\Controllers\BackupController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PipelineController;
+use App\Http\Controllers\EasyPanelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -159,11 +163,60 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/developers/teams', [DeveloperController::class, 'storeTeam'])->name('developers.teams.store');
     Route::put('/developers/teams/{team}', [DeveloperController::class, 'updateTeam'])->name('developers.teams.update');
     Route::delete('/developers/teams/{team}', [DeveloperController::class, 'destroyTeam'])->name('developers.teams.destroy');
+
+    // Backups
+    Route::get('/backups', [BackupController::class, 'index'])->name('backups.index');
+    Route::get('/backups/status', [BackupController::class, 'status'])->name('backups.status');
+    Route::get('/backups/systems', [BackupController::class, 'systems'])->name('backups.systems');
+    Route::get('/backups/destinations', [BackupController::class, 'destinations'])->name('backups.destinations');
+    Route::post('/backups/destinations', [BackupController::class, 'storeDestination'])->name('backups.destinations.store');
+    Route::put('/backups/destinations/{destination}', [BackupController::class, 'updateDestination'])->name('backups.destinations.update');
+    Route::delete('/backups/destinations/{destination}', [BackupController::class, 'destroyDestination'])->name('backups.destinations.destroy');
+
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::get('/api/notifications', [NotificationController::class, 'api'])->name('notifications.api');
+    Route::post('/notifications/{notification}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::delete('/notifications/{notification}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+    Route::delete('/notifications', [NotificationController::class, 'clearAll'])->name('notifications.clearAll');
+
+    // Pipelines
+    Route::get('/pipelines', [PipelineController::class, 'index'])->name('pipelines.index');
+    Route::get('/pipelines/create', [PipelineController::class, 'create'])->name('pipelines.create');
+    Route::get('/pipelines/{pipeline}', [PipelineController::class, 'show'])->name('pipelines.show');
+    Route::post('/pipelines', [PipelineController::class, 'store'])->name('pipelines.store');
+    Route::put('/pipelines/{pipeline}', [PipelineController::class, 'update'])->name('pipelines.update');
+    Route::delete('/pipelines/{pipeline}', [PipelineController::class, 'destroy'])->name('pipelines.destroy');
+    Route::post('/pipelines/{pipeline}/run', [PipelineController::class, 'run'])->name('pipelines.run');
+    Route::get('/pipelines/{pipeline}/runs', [PipelineController::class, 'runs'])->name('pipelines.runs');
+    Route::get('/pipelines/runs/{run}', [PipelineController::class, 'runDetail'])->name('pipelines.run-detail');
+    Route::post('/pipelines/runs/{run}/cancel', [PipelineController::class, 'cancel'])->name('pipelines.cancel');
+    Route::post('/pipelines/runs/{run}/rollback', [PipelineController::class, 'rollback'])->name('pipelines.rollback');
+
+    // EasyPanel
+    Route::get('/easypanel/servers', [EasyPanelController::class, 'servers'])->name('easypanel.servers');
+    Route::get('/easypanel/servers/{serverId}/metrics', [EasyPanelController::class, 'metrics'])->name('easypanel.metrics');
+    Route::get('/easypanel/servers/{serverId}/logs', [EasyPanelController::class, 'logs'])->name('easypanel.logs');
+    Route::get('/easypanel/servers/{serverId}/logs/stream', [EasyPanelController::class, 'logsStream'])->name('easypanel.logs-stream');
+    Route::get('/easypanel/servers/{serverId}/status', [EasyPanelController::class, 'status'])->name('easypanel.status');
+    Route::post('/easypanel/servers/{serverId}/deploy', [EasyPanelController::class, 'deploy'])->name('easypanel.deploy');
+    Route::post('/easypanel/servers/{serverId}/restart', [EasyPanelController::class, 'restart'])->name('easypanel.restart');
+    Route::get('/easypanel/servers/{serverId}/services', [EasyPanelController::class, 'services'])->name('easypanel.services');
+    Route::post('/easypanel/servers/{serverId}/exec', [EasyPanelController::class, 'exec'])->name('easypanel.exec');
 });
 
 Route::post('/webhook/bitbucket', [WebhookController::class, 'handleBitbucket'])->name('webhook.bitbucket');
 Route::post('/webhook', [WebhookController::class, 'handle'])->name('webhook.handle');
 
 Route::post('/api/server/update', [ServerController::class, 'apiUpdate']);
+
+// API EasyPanel
+Route::get('/api/easypanel/servers', [EasyPanelController::class, 'apiServers']);
+Route::post('/api/easypanel/servers/sync', [EasyPanelController::class, 'syncServers']);
+
+// API Pipeline
+Route::get('/api/pipelines', [PipelineController::class, 'api']);
+Route::post('/api/pipelines/{pipeline}/run', [PipelineController::class, 'apiRun']);
 
 require __DIR__.'/auth.php';

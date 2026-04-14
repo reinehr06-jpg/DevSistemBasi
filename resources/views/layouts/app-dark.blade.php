@@ -235,11 +235,23 @@
 </head>
 <body>
     <div class="app-container">
-        @include('layouts.sidebar-simple', ['systems' => $systems ?? \App\Models\System::where('active', true)->get()])
+        @include('layouts.sidebar', ['systems' => $systems ?? \App\Models\System::where('active', true)->get()])
         
         <main class="main-content">
             @yield('content')
         </main>
     </div>
+    <script>
+        function toggleSystemMenu(id) {
+            const menu = document.getElementById(id);
+            const arrow = document.getElementById('arrow-' + id);
+            if (menu) {
+                menu.classList.toggle('hidden');
+                if (arrow) {
+                    arrow.classList.toggle('rotate-90');
+                }
+            }
+        }
+    </script>
 </body>
 </html>

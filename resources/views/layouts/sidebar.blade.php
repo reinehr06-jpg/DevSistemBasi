@@ -16,9 +16,12 @@
     <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-6">
         <!-- 1.0 Dashboard -->
         <div>
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
-                Principal
-            </p>
+            <div class="flex w-full justify-between items-center cursor-pointer mb-1 px-3" onclick="toggleSystemMenu('menu-principal')">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Principal</p>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-principal">▸</span>
+                </div>
             <div class="space-y-1">
                 <a href="{{ route('dashboard') }}" class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <span class="menu-icon">📊</span>
@@ -27,40 +30,35 @@
             </div>
         </div>
 
-        <!-- 2.0 Desenvolvedores -->
-        <div>
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
-                Desenvolvedores
-            </p>
-            <div class="space-y-1">
-                <button onclick="toggleSystemMenu('menu-devs')" class="menu-item w-full justify-between">
-                    <div class="flex items-center gap-3">
-                        <span class="menu-icon">👥</span>
-                        <span>2.1 Lista</span>
-                    </div>
-                    <span class="text-xs transition-transform" id="arrow-menu-devs">▸</span>
-                </button>
-                <div id="menu-devs" class="hidden pl-6 mt-1 space-y-1">
-                    <a href="{{ route('developers.index') }}" class="menu-item text-sm py-2">
-                        <span class="text-slate-500">📋</span>
-                        <span>Todos os Devs</span>
-                    </a>
-                    <a href="{{ route('developers.create') }}" class="menu-item text-sm py-2">
-                        <span class="text-slate-500">➕</span>
-                        <span>Novo Dev</span>
-                    </a>
-                </div>
-
-                <button onclick="toggleSystemMenu('menu-desempenho')" class="menu-item w-full justify-between">
-                    <div class="flex items-center gap-3">
-                        <span class="menu-icon">📊</span>
-                        <span>2.2 Desempenho</span>
-                    </div>
-                    <span class="text-xs transition-transform" id="arrow-menu-desempenho">▸</span>
-                </button>
+<!-- 2.0 DESENVOLVEDORES -->
+          <div>
+              <div class="flex w-full justify-between items-center cursor-pointer mb-1 px-3" onclick="toggleSystemMenu('menu-devs')">
+                      <div>
+                          <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Desenvolvedores</p>
+                      </div>
+                      <span class="text-xs transition-transform" id="arrow-menu-devs">▸</span>
+                  </div>
+              <div class="space-y-1">
+                  <button onclick="toggleSystemMenu('menu-desempenho')" class="menu-item w-full justify-between">
+                      <div class="flex items-center gap-3">
+                          <span class="menu-icon">📈</span>
+                          <span>2.2 Desempenho</span>
+                      </div>
+                      <span class="text-xs transition-transform" id="arrow-menu-desempenho">▸</span>
+                  </button>
+                 <div id="menu-devs" class="hidden pl-6 mt-1 space-y-1">
+                     <a href="{{ route('developers.index') }}" class="menu-item text-sm py-2">
+                         <span class="text-slate-500">📋</span>
+                         <span>Lista</span>
+                     </a>
+                     <a href="{{ route('developers.create') }}" class="menu-item text-sm py-2">
+                         <span class="text-slate-500">➕</span>
+                         <span>Novo Dev</span>
+                     </a>
+                 </div>
                 <div id="menu-desempenho" class="hidden pl-6 mt-1 space-y-1">
                     <a href="{{ route('developers.performance') }}" class="menu-item text-sm py-2">
-                        <span class="text-slate-500">📈</span>
+                        <span class="text-slate-500">📊</span>
                         <span>Métricas</span>
                     </a>
                     <a href="{{ route('developers.ranking') }}" class="menu-item text-sm py-2">
@@ -79,9 +77,9 @@
                 <div id="menu-times" class="hidden pl-6 mt-1 space-y-1">
                     <a href="{{ route('developers.teams') }}" class="menu-item text-sm py-2">
                         <span class="text-slate-500">📋</span>
-                        <span>Lista de Times</span>
+                        <span>Lista</span>
                     </a>
-                    <a href="{{ route('developers.teams') }}" class="menu-item text-sm py-2">
+                    <a href="{{ route('developers.teams') }}?create=1" class="menu-item text-sm py-2">
                         <span class="text-slate-500">➕</span>
                         <span>Criar Time</span>
                     </a>
@@ -97,7 +95,7 @@
                 <div id="menu-bugs" class="hidden pl-6 mt-1 space-y-1">
                     <a href="{{ route('bugs.index') }}" class="menu-item text-sm py-2">
                         <span class="text-slate-500">📋</span>
-                        <span>Todos os Bugs</span>
+                        <span>Lista</span>
                     </a>
                     <a href="{{ route('bugs.create') }}" class="menu-item text-sm py-2">
                         <span class="text-slate-500">➕</span>
@@ -225,17 +223,65 @@
                     </a>
                 </div>
 
+                <button onclick="toggleSystemMenu('menu-pipeline')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔄</span>
+                        <span>3.6 Pipeline CI/CD</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-pipeline">▸</span>
+                </button>
+                <div id="menu-pipeline" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('pipelines.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista</span>
+                    </a>
+                    <a href="{{ route('pipelines.create') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Novo Pipeline</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📜</span>
+                        <span>Execuções</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-easypanel')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🖥️</span>
+                        <span>3.7 EasyPanel</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-easypanel">▸</span>
+                </button>
+                <div id="menu-easypanel" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('easypanel.servers') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📊</span>
+                        <span>Servidores</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📈</span>
+                        <span>Métricas</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📜</span>
+                        <span>Logs</span>
+                    </a>
+                </div>
+
                 <button onclick="toggleSystemMenu('menu-backups')" class="menu-item w-full justify-between">
                     <div class="flex items-center gap-3">
                         <span class="menu-icon">💾</span>
-                        <span>3.6 Backups</span>
+                        <span>3.8 Backups</span>
                     </div>
                     <span class="text-xs transition-transform" id="arrow-menu-backups">▸</span>
                 </button>
                 <div id="menu-backups" class="hidden pl-6 mt-1 space-y-1">
-                    <a href="#" class="menu-item text-sm py-2">
+                    <a href="{{ route('backups.index') }}" class="menu-item text-sm py-2">
                         <span class="text-slate-500">📋</span>
                         <span>Lista</span>
+                    </a>
+                    <a href="{{ route('backups.destinations') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">☁️</span>
+                        <span>Destinos</span>
                     </a>
                     <a href="#" class="menu-item text-sm py-2">
                         <span class="text-slate-500">📅</span>
@@ -521,7 +567,7 @@
                 @foreach($systems ?? \App\Models\System::where('active', true)->get() as $system)
                 <button onclick="toggleSystemMenu('system-{{ $system->id }}')" class="menu-item w-full justify-between group-hover:bg-[#1a1a24]">
                     <div class="flex items-center gap-3">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background-color: {{ $system->color }}"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-[{{ $system->color }}]"></span>
                         <span class="text-sm truncate">{{ $system->name }}</span>
                     </div>
                     <span class="text-slate-500 text-xs group-hover:text-white transition-transform" id="arrow-system-{{ $system->id }}">▸</span>

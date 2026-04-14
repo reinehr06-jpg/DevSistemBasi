@@ -13,6 +13,12 @@ class System extends Model
         'color',
         'icon',
         'active',
+        'db_host',
+        'db_port',
+        'db_name',
+        'db_username',
+        'db_password',
+        'db_type',
     ];
 
     protected $casts = [
@@ -32,5 +38,15 @@ class System extends Model
     public function servers(): HasMany
     {
         return $this->hasMany(Server::class);
+    }
+
+    public function alerts(): HasMany
+    {
+        return $this->hasMany(Alert::class);
+    }
+
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class, 'system_id');
     }
 }

@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
-            $table->enum('type', ['git', 'deploy', 'erro', 'sistema'])->default('sistema');
+            $table->foreignId('system_id')->nullable()->constrained()->onDelete('set null');
+            $table->enum('type', ['git', 'deploy', 'erro', 'sistema', 'ai', 'backup'])->default('sistema');
             $table->string('title');
             $table->text('message');
             $table->json('payload')->nullable();

@@ -62,7 +62,7 @@ class AlertController extends Controller
 
     public function acknowledge(Alert $alert)
     {
-        $alert->update(['acknowledged' => true, 'acknowledged_at' => now(), 'acknowledged_by' => auth()->user()->id]);
+        $alert->update(['status' => 'acknowledged']);
         return back();
     }
 }

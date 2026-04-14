@@ -6,22 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('ai_agents', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('roles', function (Blueprint $table) {
+            $table->string('slug')->unique()->after('name');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('ai_agents');
+        Schema::table('roles', function (Blueprint $table) {
+            $table->dropColumn(['slug']);
+        });
     }
 };
