@@ -60,6 +60,8 @@ class SystemProfileController extends Controller
             'detected_framework' => $detected['framework'],
             'detected_database' => $detected['database'],
             'detected_version' => $detected['version'],
+            'detected_hosting' => $detected['hosting'],
+            'detected_server' => $detected['server'],
             'auto_detected' => true,
         ]);
 
@@ -83,6 +85,8 @@ class SystemProfileController extends Controller
             'detected_framework' => $detected['framework'],
             'detected_database' => $detected['database'],
             'detected_version' => $detected['version'],
+            'detected_hosting' => $detected['hosting'],
+            'detected_server' => $detected['server'],
             'auto_detected' => true,
         ]);
 

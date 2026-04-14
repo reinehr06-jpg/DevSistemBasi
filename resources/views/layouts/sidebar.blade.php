@@ -14,7 +14,7 @@
 
     <!-- Navigation -->
     <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-6">
-        <!-- Main Menu -->
+        <!-- 1.0 Dashboard -->
         <div>
             <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
                 Principal
@@ -27,95 +27,523 @@
             </div>
         </div>
 
-        <!-- Systems Section -->
+        <!-- 2.0 Desenvolvedores -->
+        <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
+                Desenvolvedores
+            </p>
+            <div class="space-y-1">
+                <button onclick="toggleSystemMenu('menu-devs')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">👥</span>
+                        <span>2.1 Lista</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-devs">▸</span>
+                </button>
+                <div id="menu-devs" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('developers.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Todos os Devs</span>
+                    </a>
+                    <a href="{{ route('developers.create') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Novo Dev</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-desempenho')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">📊</span>
+                        <span>2.2 Desempenho</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-desempenho">▸</span>
+                </button>
+                <div id="menu-desempenho" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('developers.performance') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📈</span>
+                        <span>Métricas</span>
+                    </a>
+                    <a href="{{ route('developers.ranking') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">🏆</span>
+                        <span>Ranking</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-times')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">👥</span>
+                        <span>2.3 Times</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-times">▸</span>
+                </button>
+                <div id="menu-times" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('developers.teams') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista de Times</span>
+                    </a>
+                    <a href="{{ route('developers.teams') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Criar Time</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-bugs')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🐛</span>
+                        <span>2.4 Bugs</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-bugs">▸</span>
+                </button>
+                <div id="menu-bugs" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('bugs.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Todos os Bugs</span>
+                    </a>
+                    <a href="{{ route('bugs.create') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Novo Bug</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-sprints')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🏃</span>
+                        <span>2.5 Sprints</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-sprints">▸</span>
+                </button>
+                <div id="menu-sprints" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Ativas</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">✅</span>
+                        <span>Concluídas</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.0 Sistemas -->
+        <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
+                Sistemas
+            </p>
+            <div class="space-y-1">
+                <button onclick="toggleSystemMenu('menu-syslist')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">📋</span>
+                        <span>3.1 Lista</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-syslist">▸</span>
+                </button>
+                <div id="menu-syslist" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('systems.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Todos</span>
+                    </a>
+                    <a href="{{ route('systems.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Novo</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-dna')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🧬</span>
+                        <span>3.2 DNA</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-dna">▸</span>
+                </button>
+                <div id="menu-dna" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('system-profiles.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Profiles</span>
+                    </a>
+                    <a href="{{ route('dependencies.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">🕸️</span>
+                        <span>Dependências</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-envs')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🌍</span>
+                        <span>3.3 Ambientes</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-envs">▸</span>
+                </button>
+                <div id="menu-envs" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">dev</span>
+                        <span>Desenvolvimento</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">staging</span>
+                        <span>Homologação</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">prod</span>
+                        <span>Produção</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-srv')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🖥️</span>
+                        <span>3.4 Servidores</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-srv">▸</span>
+                </button>
+                <div id="menu-srv" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('servers.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📊</span>
+                        <span>Monitoramento</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-deploy')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🚀</span>
+                        <span>3.5 Deploy</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-deploy">▸</span>
+                </button>
+                <div id="menu-deploy" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('deploy.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Histórico</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">↺</span>
+                        <span>Rollback</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-backups')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">💾</span>
+                        <span>3.6 Backups</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-backups">▸</span>
+                </button>
+                <div id="menu-backups" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📅</span>
+                        <span>Agendamentos</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-integrations')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔗</span>
+                        <span>3.7 Integrações</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-integrations">▸</span>
+                </button>
+                <div id="menu-integrations" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('integrations.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Nova</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-workflows')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">⚡</span>
+                        <span>3.8 Workflows</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-workflows">▸</span>
+                </button>
+                <div id="menu-workflows" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('workflows.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">▶️</span>
+                        <span>Execuções</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-alerts')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔔</span>
+                        <span>3.9 Alertas</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-alerts">▸</span>
+                </button>
+                <div id="menu-alerts" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('alerts.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Ativos</span>
+                    </a>
+                    <a href="{{ route('alerts.rules') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">⚙️</span>
+                        <span>Regras</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📜</span>
+                        <span>Histórico</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-integrations')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔗</span>
+                        <span>3.4 Integrações</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-integrations">▸</span>
+                </button>
+                <div id="menu-integrations" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('integrations.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Todas</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Nova</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-workflows')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">⚡</span>
+                        <span>3.5 Workflows</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-workflows">▸</span>
+                </button>
+                <div id="menu-workflows" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('workflows.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Todos</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Novo</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-alerts')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔔</span>
+                        <span>3.6 Alertas</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-alerts">▸</span>
+                </button>
+                <div id="menu-alerts" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('alerts.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Ativos</span>
+                    </a>
+                    <a href="{{ route('alerts.rules') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">⚙️</span>
+                        <span>Regras</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4.0 AI Core -->
+        <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
+                AI Core
+            </p>
+            <div class="space-y-1">
+                <button onclick="toggleSystemMenu('menu-orch')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🧠</span>
+                        <span>4.1 Orchestrator</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-orch">▸</span>
+                </button>
+                <div id="menu-orch" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="{{ route('ai-orchestrator.index') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{{ route('ai-orchestrator.agents') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">👥</span>
+                        <span>Agentes</span>
+                    </a>
+                    <a href="{{ route('ai-orchestrator.flows') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">🔀</span>
+                        <span>Pipelines</span>
+                    </a>
+                    <a href="{{ route('ai-orchestrator.executions') }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📜</span>
+                        <span>Logs</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-watcher')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">👁️</span>
+                        <span>4.2 AI Watcher</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-watcher">▸</span>
+                </button>
+                <div id="menu-watcher" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">⚙️</span>
+                        <span>Configurar</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Logs</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-predict')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔮</span>
+                        <span>4.3 Previsões</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-predict">▸</span>
+                </button>
+                <div id="menu-predict" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">⚙️</span>
+                        <span>Configurar</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-memory')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">💾</span>
+                        <span>4.4 Memória IA</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-memory">▸</span>
+                </button>
+                <div id="menu-memory" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Gerenciar</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">🧠</span>
+                        <span>Aprendizado</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📊</span>
+                        <span>Estatísticas</span>
+                    </a>
+                </div>
+
+                <button onclick="toggleSystemMenu('menu-actions')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">⚡</span>
+                        <span>4.5 Ações Auto</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-actions">▸</span>
+                </button>
+                <div id="menu-actions" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Lista</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">➕</span>
+                        <span>Nova Ação</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📜</span>
+                        <span>Execuções</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5.0 Configurações -->
+        <div>
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
+                Configurações
+            </p>
+            <div class="space-y-1">
+                <button onclick="toggleSystemMenu('menu-notifications')" class="menu-item w-full justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="menu-icon">🔔</span>
+                        <span>5.1 Notificações</span>
+                    </div>
+                    <span class="text-xs transition-transform" id="arrow-menu-notifications">▸</span>
+                </button>
+                <div id="menu-notifications" class="hidden pl-6 mt-1 space-y-1">
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📧</span>
+                        <span>Email</span>
+                    </a>
+                    <a href="#" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📱</span>
+                        <span>Push</span>
+                    </a>
+                </div>
+
+                <a href="#" class="menu-item">
+                    <span class="menu-icon">👥</span>
+                    <span>5.2 Usuários</span>
+                </a>
+
+                <a href="{{ route('profile.edit') }}" class="menu-item">
+                    <span class="menu-icon">⚙️</span>
+                    <span>Meu Perfil</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Sistemas Ativos (lista dinâmica) -->
+        @if($systems ?? \App\Models\System::where('active', true)->count() > 0)
         <div>
             <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
                 Sistemas
             </p>
             <div class="space-y-1">
                 @foreach($systems ?? \App\Models\System::where('active', true)->get() as $system)
-                <div class="group">
-                    <button onclick="toggleSystemMenu('system-{{ $system->id }}')" class="menu-item w-full justify-between group-hover:bg-[#1a1a24]">
-                        <div class="flex items-center gap-3">
-                            <span class="w-2.5 h-2.5 rounded-full" style="background-color: {{ $system->color }}"></span>
-                            <span class="text-sm truncate">{{ $system->name }}</span>
-                        </div>
-                        <span class="text-slate-500 text-xs group-hover:text-white transition-transform" id="arrow-system-{{ $system->id }}">
-                            ‣
-                        </span>
-                    </button>
-                    <div id="system-{{ $system->id }}" class="hidden pl-8 mt-1 space-y-1">
-                        <a href="{{ route('dev-tasks.index', ['system_id' => $system->id]) }}" class="menu-item text-sm py-2">
-                            <span class="text-slate-500">📂</span>
-                            <span>Desenvolvimento</span>
-                        </a>
-                        <a href="{{ route('bugs.index', ['system_id' => $system->id]) }}" class="menu-item text-sm py-2">
-                            <span class="text-slate-500">🐞</span>
-                            <span>Bugs</span>
-                        </a>
-                        <a href="{{ route('servers.by-system', $system->id) }}" class="menu-item text-sm py-2">
-                            <span class="text-slate-500">🖥️</span>
-                            <span>Servidores</span>
-                        </a>
+                <button onclick="toggleSystemMenu('system-{{ $system->id }}')" class="menu-item w-full justify-between group-hover:bg-[#1a1a24]">
+                    <div class="flex items-center gap-3">
+                        <span class="w-2.5 h-2.5 rounded-full" style="background-color: {{ $system->color }}"></span>
+                        <span class="text-sm truncate">{{ $system->name }}</span>
                     </div>
+                    <span class="text-slate-500 text-xs group-hover:text-white transition-transform" id="arrow-system-{{ $system->id }}">▸</span>
+                </button>
+                <div id="system-{{ $system->id }}" class="hidden pl-8 mt-1 space-y-1">
+                    <a href="{{ route('dev-tasks.index', ['system_id' => $system->id]) }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">📋</span>
+                        <span>Tarefas</span>
+                    </a>
+                    <a href="{{ route('bugs.index', ['system_id' => $system->id]) }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">🐞</span>
+                        <span>Bugs</span>
+                    </a>
+                    <a href="{{ route('servers.by-system', $system->id) }}" class="menu-item text-sm py-2">
+                        <span class="text-slate-500">🖥️</span>
+                        <span>Servidores</span>
+                    </a>
                 </div>
                 @endforeach
             </div>
         </div>
-
-        <!-- Integration Section -->
-        <div>
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
-                Integrações
-            </p>
-            <div class="space-y-1">
-                <a href="{{ route('integrations.index') }}" class="menu-item {{ request()->routeIs('integrations.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🔗</span>
-                    <span>Integrações</span>
-                </a>
-                <a href="{{ route('workflows.index') }}" class="menu-item {{ request()->routeIs('workflows.*') ? 'active' : '' }}">
-                    <span class="menu-icon">⚡</span>
-                    <span>Workflows</span>
-                </a>
-                <a href="{{ route('alerts.index') }}" class="menu-item {{ request()->routeIs('alerts.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🔔</span>
-                    <span>Alertas</span>
-                </a>
-            </div>
-        </div>
-
-        <!-- Settings Section -->
-        <div>
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3 px-3">
-                Configurações
-            </p>
-            <div class="space-y-1">
-                <a href="{{ route('systems.index') }}" class="menu-item {{ request()->routeIs('systems.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🧬</span>
-                    <span>Novo Sistema</span>
-                </a>
-                <a href="{{ route('dependencies.index') }}" class="menu-item {{ request()->routeIs('dependencies.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🕸️</span>
-                    <span>Dependências</span>
-                </a>
-                <a href="{{ route('ai-orchestrator.index') }}" class="menu-item {{ request()->routeIs('ai-orchestrator.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🤖</span>
-                    <span>AI Orchestrator</span>
-                </a>
-                <a href="{{ route('dev-tasks.index') }}" class="menu-item {{ request()->routeIs('dev-tasks.*') ? 'active' : '' }}">
-                    <span class="menu-icon">📋</span>
-                    <span>Tarefas</span>
-                </a>
-                <a href="{{ route('bugs.index') }}" class="menu-item {{ request()->routeIs('bugs.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🐛</span>
-                    <span>Bugs</span>
-                </a>
-                <a href="{{ route('deploy.index') }}" class="menu-item {{ request()->routeIs('deploy.*') ? 'active' : '' }}">
-                    <span class="menu-icon">🚀</span>
-                    <span>Deploy</span>
-                </a>
-            </div>
-        </div>
+        @endif
     </nav>
 
     <!-- User Section -->
@@ -145,7 +573,11 @@
         const menu = document.getElementById(id);
         const arrow = document.getElementById('arrow-' + id);
         
-        menu.classList.toggle('hidden');
-        arrow.classList.toggle('rotate-90');
+        if (menu) {
+            menu.classList.toggle('hidden');
+            if (arrow) {
+                arrow.classList.toggle('rotate-90');
+            }
+        }
     }
 </script>

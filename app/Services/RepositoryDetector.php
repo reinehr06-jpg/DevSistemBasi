@@ -14,6 +14,8 @@ class RepositoryDetector
         'framework' => null,
         'database' => null,
         'version' => null,
+        'hosting' => null,
+        'server' => null,
     ];
 
     public function detect(System $system): array
@@ -93,6 +95,7 @@ class RepositoryDetector
         $contents = Http::withHeaders(['User-Agent' => 'DevManager/1.0'])->get($contentsUrl)->json();
 
         $this->detectFromFiles($contents);
+        $this->detectHostingFromFiles($contents);
         $this->detectFromComposer($owner, $repo);
         $this->detectFromPackage($owner, $repo);
         $this->detectFromRequirements($owner, $repo);
@@ -126,6 +129,7 @@ class RepositoryDetector
 
         if (isset($srcResponse['values'])) {
             $this->detectFromFiles($srcResponse['values']);
+            $this->detectHostingFromFiles($srcResponse['values']);
         }
 
         $this->detectFromFileContent($owner, $repo, 'composer.json');
@@ -299,6 +303,35 @@ class RepositoryDetector
                 'redis' => $this->detected['database'] = 'Redis',
                 default => null,
             };
+        }
+
+        if (preg_match('/(nginx|apache|httpd|caddy)/i', $content, $matches)) {
+            $this->detected['server'] = strtoupper($matches[1]);
+        }
+
+        if (preg_match('/(php-fpm|gunicorn|unicorn|puma|passenger|uvicorn)/i', $content, $matches)) {
+            $this->detected['server'] = strtoupper($matches[1]);
+        }
+    }
+
+    private function detectHostingFromFiles(array $files): void
+    {
+        $fileNames = array_column($files, 'name');
+
+        if (in_array('vercel.json', $fileNames)) {
+            $this->detected['hosting'] = 'Vercel';
+        } elseif (in_array('netlify.toml', $fileNames)) {
+            $this->detected['hosting'] = 'Netlify';
+        } elseif (in_array('firebase.json', $fileNames)) {
+            $this->detected['hosting'] = 'Firebase';
+        } elseif (in_array('Procfile', $fileNames)) {
+            $this->detected['hosting'] = 'Heroku';
+        } elseif (in_array('app.yaml', $fileNames)) {
+            $this->detected['hosting'] = 'Google Cloud';
+        } elseif (in_array('cloudformation.yaml', $fileNames) || in_array('cloudformation.yml', $fileNames)) {
+            $this->detected['hosting'] = 'AWS';
+        } elseif (in_array('.ebextensions', $fileNames) || in_array('elasticbeanstalk', $fileNames)) {
+            $this->detected['hosting'] = 'AWS Beanstalk';
         }
     }
 }

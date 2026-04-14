@@ -40,16 +40,25 @@
                 @endif
             </div>
             <p style="font-size: 13px; color: var(--primary); word-break: break-all;">{{ $system->repository_url }}</p>
-            @if($system->detected_language || $system->detected_framework)
+            @if($system->detected_language || $system->detected_framework || $system->detected_database || $system->detected_hosting || $system->detected_server)
             <div style="display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;">
                 @if($system->detected_language)
-                <span style="font-size: 11px; background: var(--primary); padding: 3px 8px; border-radius: 4px;">{{ $system->detected_language }}</span>
+                <span style="font-size: 11px; background: var(--primary); padding: 3px 8px; border-radius: 4px; color: white;">{{ $system->detected_language }}</span>
                 @endif
                 @if($system->detected_framework)
-                <span style="font-size: 11px; background: #10b981; padding: 3px 8px; border-radius: 4px;">{{ $system->detected_framework }}</span>
+                <span style="font-size: 11px; background: #10b981; padding: 3px 8px; border-radius: 4px; color: white;">{{ $system->detected_framework }}</span>
                 @endif
                 @if($system->detected_database)
-                <span style="font-size: 11px; background: #8b5cf6; padding: 3px 8px; border-radius: 4px;">{{ $system->detected_database }}</span>
+                <span style="font-size: 11px; background: #8b5cf6; padding: 3px 8px; border-radius: 4px; color: white;">{{ $system->detected_database }}</span>
+                @endif
+                @if($system->detected_server)
+                <span style="font-size: 11px; background: #ec4899; padding: 3px 8px; border-radius: 4px; color: white;">{{ $system->detected_server }}</span>
+                @endif
+                @if($system->detected_hosting)
+                <span style="font-size: 11px; background: #14b8a6; padding: 3px 8px; border-radius: 4px; color: white;">{{ $system->detected_hosting }}</span>
+                @endif
+                @if($system->detected_version)
+                <span style="font-size: 11px; background: #f59e0b; padding: 3px 8px; border-radius: 4px; color: white;">{{ $system->detected_version }}</span>
                 @endif
             </div>
             @endif
@@ -65,7 +74,10 @@
                 Editar
             </button>
             <button onclick="detectRepo({{ $system->id }})" style="flex: 1; background: var(--primary); color: white; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px;">
-                ↻ Detectar
+                ↻
+            </button>
+            <button onclick="deleteSystem({{ $system->id }})" style="flex: 1; background: #ef4444; color: white; padding: 10px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px;">
+                ✕
             </button>
         </div>
     </div>
@@ -109,10 +121,13 @@
             
             <div>
                 <label style="display: block; color: var(--text-muted); font-size: 14px; margin-bottom: 8px;">Repositório Git (URL)</label>
-                <input type="text" name="repository_url" id="systemRepo" placeholder="https://github.com/user/repo.git" style="width: 100%; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: white;" onpaste="setTimeout(detectRepoFromForm, 100)">
-                <div id="detectResult2" style="display: none; margin-top: 8px; padding: 10px; background: var(--bg-surface); border-radius: 8px;">
+                <input type="text" name="repository_url" id="systemRepo" placeholder="https://github.com/user/repo.git" style="width: 100%; padding: 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: white;" onpaste="setTimeout(detectRepoFromForm, 100)" onblur="detectRepoFromForm()">
+                <div id="detectResult2" style="display: none; margin-top: 8px; padding: 10px; background: rgba(34,197,94,0.1); border-radius: 8px; border: 1px solid var(--success);">
                     <span style="font-size: 12px; color: var(--success);">✓ Detectado automaticamente:</span>
                     <div id="detectTags2" style="display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap;"></div>
+                </div>
+                <div id="detectLoading2" style="display: none; margin-top: 8px; padding: 10px; background: var(--bg-surface); border-radius: 8px;">
+                    <span style="font-size: 12px; color: var(--text-muted);">🔄 Detectando configurações...</span>
                 </div>
             </div>
             
@@ -197,27 +212,34 @@ function detectRepoFromForm() {
     const repoUrl = document.getElementById('systemRepo').value;
     if (!repoUrl || repoUrl.length < 10) return;
     
-    const systemId = editingId || 1;
+    document.getElementById('detectLoading2').style.display = 'block';
+    document.getElementById('detectResult2').style.display = 'none';
     
     fetch('{{ route("system-profiles.detect") }}', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
-        body: JSON.stringify({ system_id: systemId, repository_url: repoUrl })
+        body: JSON.stringify({ system_id: editingId || 0, repository_url: repoUrl })
     })
     .then(r => r.json())
     .then(data => {
+        document.getElementById('detectLoading2').style.display = 'none';
         if (data.success && data.detected) {
             const result = document.getElementById('detectResult2');
             const tags = document.getElementById('detectTags2');
             result.style.display = 'block';
             tags.innerHTML = '';
-            if (data.detected.language) tags.innerHTML += '<span style="background: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + data.detected.language + '</span>';
-            if (data.detected.framework) tags.innerHTML += '<span style="background: #10b981; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + data.detected.framework + '</span>';
-            if (data.detected.database) tags.innerHTML += '<span style="background: #8b5cf6; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + data.detected.database + '</span>';
-            if (data.detected.version) tags.innerHTML += '<span style="background: #f59e0b; padding: 4px 8px; border-radius: 4px; font-size: 11px;">' + data.detected.version + '</span>';
+            if (data.detected.language) tags.innerHTML += '<span style="background: var(--primary); padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white;">' + data.detected.language + '</span>';
+            if (data.detected.framework) tags.innerHTML += '<span style="background: #10b981; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white;">' + data.detected.framework + '</span>';
+            if (data.detected.database) tags.innerHTML += '<span style="background: #8b5cf6; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white;">' + data.detected.database + '</span>';
+            if (data.detected.version) tags.innerHTML += '<span style="background: #f59e0b; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white;">' + data.detected.version + '</span>';
+            if (data.detected.server) tags.innerHTML += '<span style="background: #ec4899; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white;">' + data.detected.server + '</span>';
+            if (data.detected.hosting) tags.innerHTML += '<span style="background: #14b8a6; padding: 4px 8px; border-radius: 4px; font-size: 11px; color: white;">' + data.detected.hosting + '</span>';
         }
     })
-    .catch(e => { console.log('Erro:', e); });
+    .catch(e => { 
+        document.getElementById('detectLoading2').style.display = 'none';
+        console.log('Erro:', e); 
+    });
 }
 
 document.getElementById('systemName')?.addEventListener('input', function() {
@@ -225,5 +247,20 @@ document.getElementById('systemName')?.addEventListener('input', function() {
     const slugInput = document.getElementById('systemSlug');
     if (slugInput && !editingId) slugInput.value = slug;
 });
+
+function deleteSystem(id) {
+    if (!confirm('Tem certeza que deseja excluir este sistema?')) return;
+    
+    fetch('/systems/' + id, {
+        method: 'DELETE',
+        headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}', 'Content-Type': 'application/json' }
+    })
+    .then(r => r.json())
+    .then(data => {
+        alert(data.success || 'Sistema excluído');
+        location.reload();
+    })
+    .catch(e => alert('Erro: ' + e.message));
+}
 </script>
 @endsection

@@ -4,6 +4,7 @@ use App\Http\Controllers\BugController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DeployController;
 use App\Http\Controllers\DevTaskController;
+use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\IntegrationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServerController;
@@ -15,6 +16,9 @@ use App\Http\Controllers\AlertController;
 use App\Http\Controllers\SystemProfileController;
 use App\Http\Controllers\DependencyController;
 use App\Http\Controllers\AIOrchestratorController;
+use App\Http\Controllers\AIWatcherController;
+use App\Http\Controllers\AIActionsController;
+use App\Http\Controllers\AIPredictionsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -28,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Systems
     Route::get('/systems', [SystemController::class, 'index'])->name('systems.index');
+    Route::get('/systems/{system}', [SystemController::class, 'show'])->name('systems.show');
     Route::post('/systems', [SystemController::class, 'store'])->name('systems.store');
     Route::put('/systems/{system}', [SystemController::class, 'update'])->name('systems.update');
     Route::delete('/systems/{system}', [SystemController::class, 'destroy'])->name('systems.destroy');
@@ -119,6 +124,41 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/ai-orchestrator/executions', [AIOrchestratorController::class, 'executions'])->name('ai-orchestrator.executions');
     Route::get('/ai-orchestrator/executions/{execution}', [AIOrchestratorController::class, 'executionDetail'])->name('ai-orchestrator.executions.detail');
     Route::get('/ai-orchestrator/config', [AIOrchestratorController::class, 'config'])->name('ai-orchestrator.config');
+
+    // AI Watcher
+    Route::get('/ai-watcher', [AIWatcherController::class, 'index'])->name('ai-watcher.index');
+    Route::get('/ai-watcher/config', [AIWatcherController::class, 'config'])->name('ai-watcher.config');
+    Route::post('/ai-watcher/config', [AIWatcherController::class, 'storeConfig'])->name('ai-watcher.store');
+    Route::get('/ai-watcher/logs', [AIWatcherController::class, 'logs'])->name('ai-watcher.logs');
+
+    // AI Previsões
+    Route::get('/ai-predictions', [AIPredictionsController::class, 'index'])->name('ai-predictions.index');
+    Route::get('/ai-predictions/config', [AIPredictionsController::class, 'config'])->name('ai-predictions.config');
+
+    // AI Ações Automáticas
+    Route::get('/ai-actions', [AIActionsController::class, 'index'])->name('ai-actions.index');
+    Route::get('/ai-actions/create', [AIActionsController::class, 'create'])->name('ai-actions.create');
+    Route::post('/ai-actions', [AIActionsController::class, 'store'])->name('ai-actions.store');
+    Route::get('/ai-actions/logs', [AIActionsController::class, 'logs'])->name('ai-actions.logs');
+
+    // Developers
+    Route::get('/developers', [DeveloperController::class, 'index'])->name('developers.index');
+    Route::get('/developers/create', [DeveloperController::class, 'create'])->name('developers.create');
+    Route::post('/developers', [DeveloperController::class, 'store'])->name('developers.store');
+    Route::get('/developers/{developer}', [DeveloperController::class, 'show'])->name('developers.show');
+    Route::get('/developers/{developer}/edit', [DeveloperController::class, 'edit'])->name('developers.edit');
+    Route::put('/developers/{developer}', [DeveloperController::class, 'update'])->name('developers.update');
+    Route::delete('/developers/{developer}', [DeveloperController::class, 'destroy'])->name('developers.destroy');
+
+    // Performance & Ranking
+    Route::get('/developers/performance', [DeveloperController::class, 'performance'])->name('developers.performance');
+    Route::get('/developers/ranking', [DeveloperController::class, 'ranking'])->name('developers.ranking');
+
+    // Teams
+    Route::get('/developers/teams', [DeveloperController::class, 'teams'])->name('developers.teams');
+    Route::post('/developers/teams', [DeveloperController::class, 'storeTeam'])->name('developers.teams.store');
+    Route::put('/developers/teams/{team}', [DeveloperController::class, 'updateTeam'])->name('developers.teams.update');
+    Route::delete('/developers/teams/{team}', [DeveloperController::class, 'destroyTeam'])->name('developers.teams.destroy');
 });
 
 Route::post('/webhook/bitbucket', [WebhookController::class, 'handleBitbucket'])->name('webhook.bitbucket');
